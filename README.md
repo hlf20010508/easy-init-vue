@@ -10,14 +10,12 @@
 
 <br/>
 
-可编译生成成二进制文件vue-init
+可编译生成成二进制文件vue-init，需要shc
 ```
 bash compile.sh
 ```
 
 放入系统环境变量中，方便运行
-
-需要shc
 
 可直接从release获取
 
