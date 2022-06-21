@@ -19,6 +19,13 @@ bash compile.sh
 
 可直接从release获取
 
+需要增加可执行权限
+```
+chmod +x vue-init
+```
+
+否则会弹出vue的错误提示
+
 <br/>
 
 本脚本完全按照作者个人的使用习惯进行编写
