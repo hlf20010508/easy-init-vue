@@ -77,7 +77,8 @@ Vue.use(VueAxios, axios);\
 Vue.use(ElementUI);\
 \
 if (process.env.NODE_ENV == "development") { require("./mock"); }\
-process.env.HOST=0.0.0.0
+process.env.HOST = "0.0.0.0";\
+process.env.PORT = 8080;\
 '
 
 #mock写法例子
