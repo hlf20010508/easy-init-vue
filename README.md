@@ -10,6 +10,10 @@
 
 <br/>
 
+本脚本完全按照作者个人的使用习惯进行编写
+
+<br/>
+
 本脚本会在运行时自动将所有依赖安装好，包括axios、element-ui、mock.js
 
 可编辑main_code以及三行npm install代码来选择性安装
