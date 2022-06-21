@@ -102,7 +102,7 @@ then
     sed -i '' "7i\\
         $router_link_code
         " src/router/index.js
-    sed -i '' '3d' src/App.vue
+    sed -i '' '3d;21d' src/App.vue
     sed -i '' "6i\\
         $main_code
         " src/main.js
@@ -124,7 +124,7 @@ then
     fi
 else
     sed -i "7i $router_link_code" src/router/index.js
-    sed -i '3d' src/App.vue
+    sed -i '3d;21d' src/App.vue
     sed -i "6i $main_code" src/main.js
     sed -i "1a $mock_code" src/mock/index.js
     sed -i '16d' config/index.js
