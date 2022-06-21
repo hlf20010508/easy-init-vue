@@ -5,7 +5,7 @@
 
 运行脚本，在当前目录下创建vue-cli2.0项目
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/hlf20010508/easy-init-vue/master/init_vue.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/hlf20010508/vue-init/master/vue-init.sh)"
 ```
 
 <br/>
@@ -25,3 +25,12 @@
 无法兼容其他种类后端框架
 
 可自行更改build_code以兼容其他框架
+
+<br/>
+
+可编译生成成二进制文件init-vue
+```
+bash compile.sh
+```
+
+放入系统环境变量中，方便运行
