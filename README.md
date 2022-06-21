@@ -20,12 +20,10 @@ bash compile.sh
 
 可直接从release获取
 
-需要增加可执行权限
+解压命令
 ```
-chmod +x vue-init
+tar -pxzf vue-init_version_platform.tar.gz
 ```
-
-否则会弹出vue的错误提示
 
 <br/>
 
