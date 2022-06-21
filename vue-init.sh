@@ -1,4 +1,6 @@
 #! /bin/bash
+set -e
+
 read -p "Project Name: " NAME
 expect <<EOF
     spawn vue init webpack $NAME
