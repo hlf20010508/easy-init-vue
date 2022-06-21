@@ -39,6 +39,7 @@ EOF
 # send "\033\[B\033\[B\n"
 
 cd $NAME
+rm src/assets/logo.png
 mkdir src/views
 mkdir src/mock
 touch src/mock/index.js
@@ -77,9 +78,11 @@ Vue.use(VueAxios, axios);\
 Vue.use(ElementUI);\
 \
 if (process.env.NODE_ENV == "development") { require("./mock"); }\
-process.env.HOST = "0.0.0.0";\
-process.env.PORT = 8080;\
 '
+
+#更改config/index.js中的默认host为0.0.0.0
+host_code="\    host: '0.0.0.0', // can be overwritten by process.env.HOST\
+"
 
 #mock写法例子
 mock_code='const Mock = require("mockjs");\
@@ -106,7 +109,10 @@ then
     sed -i '' "1a\\
         $mock_code
         " src/mock/index.js
-    
+    sed -i '' '16d' config/index.js
+    sed -i '' "16i\\
+        $host_code
+        " config/index.js
     if [[ $back_end_flag == "n" ]]
     then
         :
@@ -121,6 +127,8 @@ else
     sed -i '3d' src/App.vue
     sed -i "6i $main_code" src/main.js
     sed -i "1a $mock_code" src/mock/index.js
+    sed -i '16d' config/index.js
+    sed -i "16i $host_code" config/index.js
     if [[ $back_end_flag == "y" ]]
     then
         sed -i '10d' package.json
