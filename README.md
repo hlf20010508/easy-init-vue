@@ -28,7 +28,7 @@
 
 <br/>
 
-可编译生成成二进制文件init-vue
+可编译生成成二进制文件vue-init
 ```
 bash compile.sh
 ```
