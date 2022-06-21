@@ -49,7 +49,7 @@ npm install -S mockjs
 #是否有后端
 #如果有，则会更改package.json第10行，自动将打包好的文件导入后端
 #后端必须为类flask项目文件格式，有templates和static文件夹
-read -p "Any back end? (y/n) " back_end_flag
+read -p "Any back end (flask like only)? (y/n) " back_end_flag
 back_end_path=""
 if [[ $back_end_flag == "n" ]]
 then
