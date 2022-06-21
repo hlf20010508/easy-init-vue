@@ -39,8 +39,7 @@ EOF
 # send "\033\[B\033\[B\n"
 
 cd $NAME
-rm -r src/assets
-rm src/components/HelloWorld.vue
+mkdir src/views
 mkdir src/mock
 touch src/mock/index.js
 npm install -S axios vue-axios
@@ -66,11 +65,6 @@ Router.prototype.push = function push(location) {\
 \  return originalPush.call(this, location).catch(err => err)\
 }\
 \
-'
-
-#router写法例子
-router_code='\      path: "/",\
-\      //component: demo,\
 '
 
 #main.js中导入包以及判断运行环境，若为开发环境则调用mock.js
@@ -100,11 +94,8 @@ build_code='\    "build": "node build/build.js && cp -r dist/index.html ../'$bac
 system=$(uname -a)
 if [[ $system =~ "Darwin" ]]
 then
-    sed -i '' '3d;10,12d' src/router/index.js
-    sed -i '' "6i\\
+    sed -i '' "7i\\
         $router_link_code
-        9i\\
-        $router_code
         " src/router/index.js
     sed -i '' '3d' src/App.vue
     sed -i '' "6i\\
@@ -124,8 +115,7 @@ then
             " package.json
     fi
 else
-    sed -i '3d;10,12d' src/router/index.js
-    sed -i "6i $router_link_code;9i $router_code" src/router/index.js
+    sed -i "7i $router_link_code" src/router/index.js
     sed -i '3d' src/App.vue
     sed -i "6i $main_code" src/main.js
     sed -i "1a $mock_code" src/mock/index.js
