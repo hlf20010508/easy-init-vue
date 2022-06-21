@@ -3,6 +3,8 @@ set -e
 
 read -p "Project Name: " NAME
 expect <<EOF
+    set timeout -1
+    
     spawn vue init webpack $NAME
 
     expect "name"
