@@ -73,10 +73,11 @@ import VueAxios from "vue-axios";\
 import ElementUI from "element-ui";\
 import "element-ui/lib/theme-chalk/index.css";\
 \
-if (process.env.NODE_ENV == "development") { require("./mock"); }\
-\
 Vue.use(VueAxios, axios);\
 Vue.use(ElementUI);\
+\
+if (process.env.NODE_ENV == "development") { require("./mock"); }\
+process.env.HOST=0.0.0.0
 '
 
 #mock写法例子
