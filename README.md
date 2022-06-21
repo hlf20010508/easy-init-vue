@@ -34,3 +34,5 @@ bash compile.sh
 ```
 
 放入系统环境变量中，方便运行
+
+需要shc
