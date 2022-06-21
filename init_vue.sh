@@ -35,7 +35,7 @@ EOF
 # expect "NPM"
 # 执行 npm install
 # send "\n"
-# 不执行
+# 不执行 npm install
 # send "\033\[B\033\[B\n"
 
 cd $NAME
