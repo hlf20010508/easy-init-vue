@@ -131,19 +131,19 @@ then
             " package.json
     fi
 else
-    sed -i "/export default new Router/i $router_link_code ; /name: 'HelloWorld'/d" src/router/index.js
+    sed -i "/export default new Router/i $router_link_code; /name: 'HelloWorld'/d" src/router/index.js
 
-    sed -i "/.\/assets\/logo.png/d ; /margin-top/d" src/App.vue
+    sed -i "/.\/assets\/logo.png/d; /margin-top/d" src/App.vue
 
     sed -i "/import router/a $main_code" src/main.js
 
-    sed -i "/localhost/d ; /port: 8080/i $host_code" config/index.js
+    sed -i "/localhost/d; /port: 8080/i $host_code" config/index.js
 
     if [[ $back_end_flag == "n" ]]
     then
         :
     else
-        sed -i "/\"build\": \"node build\/build.js\"/d ; /\"start\": \"npm run dev\"/a $build_code" package.json
+        sed -i "/\"build\": \"node build\/build.js\"/d; /\"start\": \"npm run dev\"/a $build_code" package.json
     fi
 fi
 
