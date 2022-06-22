@@ -1,3 +1,5 @@
 #! /bin/bash
-shc -r -f vue-init.sh -o vue-init
-rm vue-init.sh.x.c
+workspace=$(dirname $0)
+echo $workspace
+shc -r -f $workspace/vue-init.sh -o $workspace/vue-init
+rm $workspace/vue-init.sh.x.c
