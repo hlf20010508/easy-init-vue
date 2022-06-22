@@ -88,14 +88,9 @@ if (process.env.NODE_ENV == "development") { require("./mock"); }\
 host_code="\    host: '0.0.0.0', // can be overwritten by process.env.HOST\
 "
 
-#mock写法例子
-mock_code='const Mock = require("mockjs");\
-//Mock.mock("url", "get/post", require("file"));\
-'
-
 #如果有类flask的后端，可以自动将打包好的文件导入
-build_code='\    "build": "node build/build.js && cp -r dist/index.html ../'$back_end_path'/templates/ && rm -r ../'$back_end_path'/static && cp -r dist/static ../'$back_end_path'"\
-'
+build_code="\    \"build\": \"node build/build.js && cp -r dist/index.html ../$back_end_path/templates/ && rm -r ../$back_end_path/static && cp -r dist/static ../$back_end_path\"\
+"
 
 #判断系统平台
 #因为macOS与Linux下的sed命令有差别
@@ -131,7 +126,8 @@ then
             " package.json
     fi
 else
-    sed -i "/export default new Router/i $router_link_code; /name: 'HelloWorld'/d" src/router/index.js
+    sed -i "/export default new Router/i $router_link_code" src/router/index.js
+    sed -i "/name: 'HelloWorld'/d" src/router/index.js
 
     sed -i "/.\/assets\/logo.png/d; /margin-top/d" src/App.vue
 
@@ -147,6 +143,7 @@ else
     fi
 fi
 
+#mock写法例子
 mock_code='const Mock = require("mockjs");\n//Mock.mock("url", "get/post", require("file"));'
 echo -e $mock_code > src/mock/index.js
 
