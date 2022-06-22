@@ -32,7 +32,7 @@ expect <<EOF
     send "n\n"
 
     expect "NPM"
-    send "\n"
+    send "\033\[B\033\[B\n"
 
     expect eof
 EOF
@@ -47,9 +47,9 @@ rm src/assets/logo.png
 mkdir src/views
 mkdir src/mock
 touch src/mock/index.js
-npm install -S axios vue-axios
-npm install -S element-ui
-npm install -S mockjs
+# npm install -S axios vue-axios
+# npm install -S element-ui
+# npm install -S mockjs
 
 #是否有后端
 #如果有，则会更改package.json第10行，自动将打包好的文件导入后端
@@ -103,41 +103,51 @@ build_code='\    "build": "node build/build.js && cp -r dist/index.html ../'$bac
 system=$(uname -a)
 if [[ $system =~ "Darwin" ]]
 then
-    sed -i '' "7i\\
+    sed -i '' "/export default new Router/i\\
         $router_link_code
+        /name: 'HelloWorld'/d
         " src/router/index.js
-    sed -i '' '3d;21d' src/App.vue
-    sed -i '' "6i\\
+
+    sed -i '' "/.\/assets\/logo.png/d
+        /margin-top/d
+        " src/App.vue
+
+    sed -i '' "/import router/a\\
         $main_code
         " src/main.js
-    sed -i '' "1a\\
-        $mock_code
-        " src/mock/index.js
-    sed -i '' '16d' config/index.js
-    sed -i '' "16i\\
+
+    sed -i '' "/localhost/d
+        /port: 8080/i\\
         $host_code
         " config/index.js
+
     if [[ $back_end_flag == "n" ]]
     then
         :
     else
-        sed -i '' '10d' package.json
-        sed -i '' "10i\\
+        sed -i '' "/\"build\": \"node build\/build.js\"/d
+            /\"start\": \"npm run dev\"/a\\
             $build_code
             " package.json
     fi
 else
-    sed -i "7i $router_link_code" src/router/index.js
-    sed -i '3d;21d' src/App.vue
-    sed -i "6i $main_code" src/main.js
-    sed -i "1a $mock_code" src/mock/index.js
-    sed -i '16d' config/index.js
-    sed -i "16i $host_code" config/index.js
-    if [[ $back_end_flag == "y" ]]
+    sed -i "/export default new Router/i $router_link_code ; /name: 'HelloWorld'/d" src/router/index.js
+
+    sed -i "/.\/assets\/logo.png/d ; /margin-top/d" src/App.vue
+
+    sed -i "/import router/a $main_code" src/main.js
+
+    sed -i "/localhost/d ; /port: 8080/i $host_code" config/index.js
+
+    if [[ $back_end_flag == "n" ]]
     then
-        sed -i '10d' package.json
-        sed -i "10i $build_code" package.json
+        :
+    else
+        sed -i "/\"build\": \"node build\/build.js\"/d ; /\"start\": \"npm run dev\"/a $build_code" package.json
     fi
 fi
+
+mock_code='const Mock = require("mockjs");\n//Mock.mock("url", "get/post", require("file"));'
+echo -e $mock_code > src/mock/index.js
 
 echo -e "\nProject initialization finished!\n\nTo get started:\n\ncd $NAME\nnpm run dev\n"
