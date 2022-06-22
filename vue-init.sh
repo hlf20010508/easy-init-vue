@@ -32,7 +32,7 @@ expect <<EOF
     send "n\n"
 
     expect "NPM"
-    send "\033\[B\033\[B\n"
+    send "\n"
 
     expect eof
 EOF
@@ -47,9 +47,9 @@ rm src/assets/logo.png
 mkdir src/views
 mkdir src/mock
 touch src/mock/index.js
-# npm install -S axios vue-axios
-# npm install -S element-ui
-# npm install -S mockjs
+npm install -S axios vue-axios
+npm install -S element-ui
+npm install -S mockjs
 
 #是否有后端
 #如果有，则会更改package.json第10行，自动将打包好的文件导入后端
@@ -65,15 +65,21 @@ else
 fi
 
 #用于防止router-link组件被多次点击而报错
-router_link_code='const originalPush = Router.prototype.push\
+router_link_code_darwin='const originalPush = Router.prototype.push\
 Router.prototype.push = function push(location) {\
 \  return originalPush.call(this, location).catch(err => err)\
 }\
 \
 '
 
+router_link_code_linux='const originalPush = Router.prototype.push\
+Router.prototype.push = function push(location) {\
+\  return originalPush.call(this, location).catch(err => err)\
+}\
+'
+
 #main.js中导入包以及判断运行环境，若为开发环境则调用mock.js
-main_code='import axios from "axios";\
+main_code_darwin='import axios from "axios";\
 import VueAxios from "vue-axios";\
 import ElementUI from "element-ui";\
 import "element-ui/lib/theme-chalk/index.css";\
@@ -84,13 +90,27 @@ Vue.use(ElementUI);\
 if (process.env.NODE_ENV == "development") { require("./mock"); }\
 '
 
+main_code_linux='import axios from "axios";\
+import VueAxios from "vue-axios";\
+import ElementUI from "element-ui";\
+import "element-ui/lib/theme-chalk/index.css";\
+\
+Vue.use(VueAxios, axios);\
+Vue.use(ElementUI);\
+\
+if (process.env.NODE_ENV == "development") { require("./mock"); }'
+
 #更改config/index.js中的默认host为0.0.0.0
-host_code="\    host: '0.0.0.0', // can be overwritten by process.env.HOST\
+host_code_darwin="\    host: '0.0.0.0', // can be overwritten by process.env.HOST\
 "
 
+host_code_linux="\    host: '0.0.0.0', // can be overwritten by process.env.HOST"
+
 #如果有类flask的后端，可以自动将打包好的文件导入
-build_code="\    \"build\": \"node build/build.js && cp -r dist/index.html ../$back_end_path/templates/ && rm -r ../$back_end_path/static && cp -r dist/static ../$back_end_path\"\
+build_code_darwin="\    \"build\": \"node build/build.js && cp -r dist/index.html ../$back_end_path/templates/ && rm -r ../$back_end_path/static && cp -r dist/static ../$back_end_path\"\
 "
+
+build_code_linux="\    \"build\": \"node build/build.js && cp -r dist/index.html ../$back_end_path/templates/ && rm -r ../$back_end_path/static && cp -r dist/static ../$back_end_path\""
 
 #判断系统平台
 #因为macOS与Linux下的sed命令有差别
@@ -99,7 +119,7 @@ system=$(uname -a)
 if [[ $system =~ "Darwin" ]]
 then
     sed -i '' "/export default new Router/i\\
-        $router_link_code
+        $router_link_code_darwin
         /name: 'HelloWorld'/d
         " src/router/index.js
 
@@ -108,12 +128,12 @@ then
         " src/App.vue
 
     sed -i '' "/import router/a\\
-        $main_code
+        $main_code_darwin
         " src/main.js
 
     sed -i '' "/localhost/d
         /port: 8080/i\\
-        $host_code
+        $host_code_darwin
         " config/index.js
 
     if [[ $back_end_flag == "n" ]]
@@ -122,24 +142,24 @@ then
     else
         sed -i '' "/\"build\": \"node build\/build.js\"/d
             /\"start\": \"npm run dev\"/a\\
-            $build_code
+            $build_code_darwin
             " package.json
     fi
 else
-    sed -i "/export default new Router/i $router_link_code" src/router/index.js
+    sed -i "/export default new Router/i $router_link_code_linux" src/router/index.js
     sed -i "/name: 'HelloWorld'/d" src/router/index.js
 
     sed -i "/.\/assets\/logo.png/d; /margin-top/d" src/App.vue
 
-    sed -i "/import router/a $main_code" src/main.js
+    sed -i "/import router/a $main_code_linux" src/main.js
 
-    sed -i "/localhost/d; /port: 8080/i $host_code" config/index.js
+    sed -i "/localhost/d; /port: 8080/i $host_code_linux" config/index.js
 
     if [[ $back_end_flag == "n" ]]
     then
         :
     else
-        sed -i "/\"build\": \"node build\/build.js\"/d; /\"start\": \"npm run dev\"/a $build_code" package.json
+        sed -i "/\"build\": \"node build\/build.js\"/d; /\"start\": \"npm run dev\"/a $build_code_linux" package.json
     fi
 fi
 
