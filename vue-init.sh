@@ -100,24 +100,24 @@ Router.prototype.push = function push(location) {\
 '
 
 #main.js中导入包以及判断运行环境，若为开发环境则调用mock.js
-main_code_darwin='import axios from "axios";\
-import VueAxios from "vue-axios";\
-import ElementUI from "element-ui";\
+main_code_darwin='import ElementUI from "element-ui";\
 import "element-ui/lib/theme-chalk/index.css";\
+import axios from "axios";\
+import VueAxios from "vue-axios";\
 \
-Vue.use(VueAxios, axios);\
 Vue.use(ElementUI);\
+Vue.use(VueAxios, axios);\
 \
 if (process.env.NODE_ENV == "development") { require("./mock"); }\
 '
 
-main_code_linux='import axios from "axios";\
-import VueAxios from "vue-axios";\
-import ElementUI from "element-ui";\
+main_code_linux='import ElementUI from "element-ui";\
 import "element-ui/lib/theme-chalk/index.css";\
+import axios from "axios";\
+import VueAxios from "vue-axios";\
 \
-Vue.use(VueAxios, axios);\
 Vue.use(ElementUI);\
+Vue.use(VueAxios, axios);\
 \
 if (process.env.NODE_ENV == "development") { require("./mock"); }'
 
@@ -188,7 +188,7 @@ else
 fi
 
 #mock写法例子
-mock_code='const Mock = require("mockjs");\n//Mock.mock("url", "get/post", require("file"));'
+mock_code='const Mock = require("mockjs");\n//Mock.mock("url", "get/post", require("file"));\n//Mock.mock("url", "post", (request) => { console.log("request: ", request) });'
 echo -e $mock_code >src/mock/index.js
 
 echo -e "\nProject initialization finished!\n\nTo get started:\n\ncd $NAME\nnpm run dev\n"
