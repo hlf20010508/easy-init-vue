@@ -188,7 +188,7 @@ else
 fi
 
 #mock写法例子
-mock_code='const Mock = require("mockjs");\n//Mock.mock("url", "get/post", require("file"));\n//Mock.mock("url", "post", (request) => { console.log("request: ", request) });'
+mock_code='import Mock from "mockjs";\n//Mock.mock("url", "get/post", require("file"));\n//Mock.mock("url", "post", (request) => { console.log("request: ", request) });'
 echo -e $mock_code >src/mock/index.js
 
 echo -e "\nProject initialization finished!\n\nTo get started:\n\ncd $NAME\nnpm run dev\n"
