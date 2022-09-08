@@ -68,7 +68,7 @@ if [[ ! $DEBUG ]]; then
         :
     else
         #填写后端的路径必须相对于vue项目，同级直接填写文件夹名字，否则使用..来定位
-        read -p "Path (relative to project $NAME) to the back end: " back_end_path
+        read -p "Path (relative to the parent directory of project $NAME) to the back end: " back_end_path
     fi
 else
     back_end_path='test'
