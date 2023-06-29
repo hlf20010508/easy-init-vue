@@ -1,5 +1,5 @@
 # vue-init
-本脚本用于快速初始化vue-cli2.0，自动增加axios、element-ui、mock.js，更改默认host为0.0.0.0，删除自带的多余文件并可设置配合类flask后端自动导入打包后的文件
+本脚本用于快速初始化vue-cli2.0，自动增加axios、element-ui，更改默认host为0.0.0.0，删除自带的多余文件并可设置配合类flask后端自动导入打包后的文件
 
 需要expect、vue-cli
 <br/>
