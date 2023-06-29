@@ -22,9 +22,9 @@ bash compile.sh
 
 <br/>
 
-本脚本会在运行时自动将所有依赖安装好，包括axios、element-ui、mock.js
+本脚本会在运行时自动将所有依赖安装好，包括axios、element-ui
 
-可编辑main_code以及三行npm install代码来选择性安装
+可编辑main_code以及两行npm install代码来选择性安装
 
 <br/>
 
